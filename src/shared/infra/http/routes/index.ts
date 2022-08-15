@@ -1,0 +1,28 @@
+import { Router } from 'express';
+
+import UserRouter from '../../../../modules/User/infra/http/routes/user.routes';
+import StockRouter from '../../../../modules/Stock/infra/http/routes/stock.routes';
+import SessionRouter from '../../../../modules/User/infra/http/routes/session.routes';
+import ProductRouter from '../../../../modules/Product/infra/http/routes/product.routes';
+import PasswordRouter from '../../../../modules/User/infra/http/routes/password.routes';
+import ProfileRouter from '../../../../modules/Profile/infra/http/routes/profile.routes';
+
+import isAuthenticated from '../middlewares/isAuthenticated';
+
+const routes = Router();
+
+routes.use('/sessions', SessionRouter);
+
+routes.use(isAuthenticated);
+
+routes.use('/profiles', ProfileRouter);
+
+routes.use('/users', UserRouter);
+
+routes.use('/password', PasswordRouter);
+
+routes.use('/products', ProductRouter);
+
+routes.use('/stocks', StockRouter);
+
+export default routes;
