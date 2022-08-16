@@ -15,19 +15,26 @@ export default class CreateSessionService {
     const userRepository = getCustomRepository(UserRepository);
     const user = await userRepository.findByLogin(login);
 
-    if (!user) throw new AppError('Email ou senha incorretos.');
+    if (!user) throw new AppError('Email ou senha incorretos.', 401);
 
     const passwordConfirmed = await compare(password, user.password);
 
-    if (!passwordConfirmed) throw new AppError('Email ou senha incorretos.');
+    if (!passwordConfirmed)
+      throw new AppError('Email ou senha incorretos.', 401);
 
-    if (!user.active) throw new AppError('Usuário desabilitado.');
+    if (!user.active) throw new AppError('Usuário desabilitado.', 401);
 
     if (device === 'web' && !user.profile.plataform)
-      throw new AppError('Usuário não tem permissão de acesso a plataforma');
+      throw new AppError(
+        'Usuário não tem permissão de acesso a plataforma',
+        401,
+      );
 
     if (device === 'mobile' && !user.profile.app)
-      throw new AppError('Usuário não tem permissão de acesso ao aplicativo');
+      throw new AppError(
+        'Usuário não tem permissão de acesso ao aplicativo',
+        401,
+      );
 
     const token = sign({}, authConfig.jwt.secret, {
       subject: user.id,
