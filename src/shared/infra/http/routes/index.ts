@@ -3,6 +3,7 @@ import { Router } from 'express';
 import UserRouter from '../../../../modules/User/infra/http/routes/user.routes';
 import StockRouter from '../../../../modules/Stock/infra/http/routes/stock.routes';
 import SessionRouter from '../../../../modules/User/infra/http/routes/session.routes';
+import SearchRouter from '../../../../modules/Product/infra/http/routes/search.routes';
 import ProductRouter from '../../../../modules/Product/infra/http/routes/product.routes';
 import PasswordRouter from '../../../../modules/User/infra/http/routes/password.routes';
 import ProfileRouter from '../../../../modules/Profile/infra/http/routes/profile.routes';
@@ -24,5 +25,7 @@ routes.use('/password', PasswordRouter);
 routes.use('/products', ProductRouter);
 
 routes.use('/stocks', StockRouter);
+
+routes.use('/search', SearchRouter);
 
 export default routes;

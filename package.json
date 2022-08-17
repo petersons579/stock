@@ -21,6 +21,7 @@
     },
     "homepage": "https://github.com/petersons579/stock#readme",
     "dependencies": {
+        "axios": "^0.27.2",
         "bcryptjs": "^2.4.3",
         "celebrate": "^15.0.1",
         "class-transformer": "^0.5.1",

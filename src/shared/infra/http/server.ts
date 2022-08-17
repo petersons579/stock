@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import '../typeorm';
+import * as dotenv from 'dotenv';
 import express, { NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
 import { pagination } from 'typeorm-pagination';
@@ -7,6 +8,8 @@ import cors from 'cors';
 import routes from './routes';
 import AppError from '../../errors/AppError';
 import customErrors from './middlewares/customErrors';
+
+dotenv.config({ path: __dirname + '/.env' });
 
 const app = express();
 
