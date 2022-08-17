@@ -18,6 +18,7 @@ export default class ProductRepository extends Repository<Product> {
         'product.minimum as minimum',
         'product.barcode as barcode',
         'product.unity as unity',
+        'count_stock(product.id) as stock',
         'DATE_FORMAT(product.created_at,"%d/%m/%Y %H:%i") as created_at',
         'DATE_FORMAT(product.updated_at,"%d/%m/%Y %H:%i") as updated_at',
       ])
@@ -49,5 +50,15 @@ export default class ProductRepository extends Repository<Product> {
     const product = await this.findOne({ where: { id } });
 
     return product;
+  }
+
+  public async listLowStock(): Promise<any> {
+    const products = await this.query(`SELECT pr.id, pr.description, pr.minimum,
+    (SELECT SUM(st.quantity) AS quantity FROM stocks AS st WHERE  st.type = 'entrance' AND st.id_product = pr.id GROUP BY st.id_product) -
+    (SELECT SUM(st.quantity) AS quantity FROM stocks AS st WHERE  st.type = 'exit' AND st.id_product = pr.id GROUP BY st.id_product) AS stock
+    FROM products AS pr WHERE (SELECT SUM(st.quantity) AS quantity FROM stocks AS st WHERE  st.type = 'entrance' AND st.id_product = pr.id GROUP BY st.id_product) -
+    (SELECT SUM(st.quantity) AS quantity FROM stocks AS st WHERE  st.type = 'exit' AND st.id_product = pr.id GROUP BY st.id_product) < pr.minimum;`);
+
+    return products;
   }
 }
