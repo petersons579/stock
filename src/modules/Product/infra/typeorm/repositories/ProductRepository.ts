@@ -61,4 +61,15 @@ export default class ProductRepository extends Repository<Product> {
 
     return products;
   }
+
+  public async verifyStock(id: string): Promise<IProduct | undefined> {
+    const product = await this.createQueryBuilder('pr')
+      .where('id = :id', {
+        id,
+      })
+      .andWhere('count_stock(pr.id) < pr.minimum')
+      .getOne();
+
+    return product;
+  }
 }
