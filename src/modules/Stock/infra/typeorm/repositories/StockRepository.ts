@@ -48,4 +48,34 @@ export default class StockRepository extends Repository<Stock> {
 
     return stock;
   }
+
+  public async lastStocks(): Promise<any> {
+    const { raw } = await this.createQueryBuilder('st')
+      .select([
+        'st.id AS id',
+        'st.quantity AS quantity',
+        'pr.description AS product',
+        'us.name AS USER',
+        'case when st.type = "entrance" then "entrada" when st.type = "exit" then "saída" END AS type',
+      ])
+      .innerJoin(Product, 'pr', 'st.id_product = pr.id')
+      .innerJoin(User, 'us', 'st.id_user = us.id')
+      .where('DATE(st.created_at) = CURDATE()')
+      .getRawAndEntities();
+
+    return raw;
+  }
+
+  public async listTotal(): Promise<any> {
+    const { raw } = await this.createQueryBuilder('stock')
+      .select([
+        'SUM(quantity) AS total',
+        'DATE_FORMAT(created_at,"%d/%m/%Y %H:%i") as created_date',
+      ])
+      .where('created_at >= DATE_SUB(NOW(),INTERVAL 31 DAY)')
+      .groupBy('DATE(created_at)')
+      .getRawAndEntities();
+
+    return raw;
+  }
 }
