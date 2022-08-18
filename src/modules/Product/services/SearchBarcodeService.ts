@@ -6,7 +6,7 @@ export default class SearchBracodeService {
   public async execute(barcode: string): Promise<IBarcodeResponse> {
     try {
       const { data } = await axios.get<IBarcodeResponseApi>(
-        `${process.env.URL_API_BARCODE}/${barcode}`,
+        `${process.env.URL_API_BARCODE}/gtins/${barcode}`,
         {
           headers: {
             'X-Cosmos-Token': `${process.env.TOKEN_API_BARCODE}`,
