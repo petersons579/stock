@@ -50,7 +50,6 @@ export const validateUpdate = celebrate(
 export const validatePassword = celebrate(
   {
     [Segments.BODY]: {
-      old_password: Joi.string().required(),
       password: Joi.string().required(),
       confirm_password: Joi.string().required(),
     },

@@ -9,7 +9,6 @@ export default class AlterPasswordService {
   public async execute({
     confirm_password,
     id,
-    old_password,
     password,
   }: IPassword): Promise<IUser> {
     const userRepository = getCustomRepository(UserRepository);
@@ -17,17 +16,10 @@ export default class AlterPasswordService {
 
     if (!user) throw new AppError('Usuário não encontrado');
 
-    const passwordConfirmed = await compare(old_password, user.password);
-
-    if (!passwordConfirmed) throw new AppError('Senha atual está incorreta.');
-
     if (password !== confirm_password)
       throw new AppError(
         'Informe a mesma senha no campo nova senha e confirmação de senha.',
       );
-
-    if (old_password === password)
-      throw new AppError('A senha não pode ser igual a senha anterior');
 
     const hashPassword = await hash(password, 8);
 
