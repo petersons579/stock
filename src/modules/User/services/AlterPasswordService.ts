@@ -26,6 +26,9 @@ export default class AlterPasswordService {
         'Informe a mesma senha no campo nova senha e confirmação de senha.',
       );
 
+    if (old_password === password)
+      throw new AppError('A senha não pode ser igual a senha anterior');
+
     const hashPassword = await hash(password, 8);
 
     user.password = hashPassword;
