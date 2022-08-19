@@ -1,5 +1,5 @@
 import { getCustomRepository } from 'typeorm';
-import { compare, hash } from 'bcryptjs';
+import { hash } from 'bcryptjs';
 import { IPassword, IUser } from '../models';
 import AppError from '../../../shared/errors/AppError';
 
@@ -24,6 +24,7 @@ export default class AlterPasswordService {
     const hashPassword = await hash(password, 8);
 
     user.password = hashPassword;
+    user.first_acess = false;
 
     userRepository.save(user);
 
