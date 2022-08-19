@@ -72,7 +72,7 @@ export default class StockRepository extends Repository<Stock> {
         'SUM(quantity) AS total',
         'DATE_FORMAT(created_at,"%d/%m/%Y %H:%i") as created_date',
       ])
-      .where('created_at >= DATE_SUB(NOW(),INTERVAL 1 YEAR)')
+      .where('created_at >= DATE_SUB(NOW(),INTERVAL 31 DAY)')
       .andWhere('type = "entrance"')
       .groupBy('DATE(created_at)')
       .getRawAndEntities();
@@ -82,7 +82,7 @@ export default class StockRepository extends Repository<Stock> {
         'SUM(quantity) AS total',
         'DATE_FORMAT(created_at,"%d/%m/%Y %H:%i") as created_date',
       ])
-      .where('created_at >= DATE_SUB(NOW(),INTERVAL 1 YEAR)')
+      .where('created_at >= DATE_SUB(NOW(),INTERVAL 31 DAY)')
       .andWhere('type = "exit"')
       .groupBy('DATE(created_at)')
       .getRawAndEntities();
