@@ -31,6 +31,9 @@ export default class User {
   @Column()
   id_profile: string;
 
+  @Column('tinyint')
+  first_acess: boolean;
+
   @ManyToOne(() => Profile)
   @JoinColumn({ name: 'id_profile' })
   profile: Profile;
