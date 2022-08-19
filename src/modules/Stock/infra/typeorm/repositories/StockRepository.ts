@@ -68,20 +68,14 @@ export default class StockRepository extends Repository<Stock> {
 
   public async listTotal(): Promise<any> {
     const entrances = await this.createQueryBuilder('stock')
-      .select([
-        'SUM(quantity) AS total',
-        'DATE_FORMAT(created_at,"%d/%m/%Y %H:%i") as created_date',
-      ])
+      .select(['SUM(quantity) AS total', 'created_at as created_date'])
       .where('created_at >= DATE_SUB(NOW(),INTERVAL 31 DAY)')
       .andWhere('type = "entrance"')
       .groupBy('DATE(created_at)')
       .getRawAndEntities();
 
     const exits = await this.createQueryBuilder('stock')
-      .select([
-        'SUM(quantity) AS total',
-        'DATE_FORMAT(created_at,"%d/%m/%Y %H:%i") as created_date',
-      ])
+      .select(['SUM(quantity) AS total', 'created_at as created_date'])
       .where('created_at >= DATE_SUB(NOW(),INTERVAL 31 DAY)')
       .andWhere('type = "exit"')
       .groupBy('DATE(created_at)')
