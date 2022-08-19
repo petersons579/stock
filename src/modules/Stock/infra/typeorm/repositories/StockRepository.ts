@@ -55,7 +55,7 @@ export default class StockRepository extends Repository<Stock> {
         'st.id AS id',
         'st.quantity AS quantity',
         'pr.description AS product',
-        'us.name AS USER',
+        'us.name AS user',
         'case when st.type = "entrance" then "entrada" when st.type = "exit" then "saída" END AS type',
       ])
       .innerJoin(Product, 'pr', 'st.id_product = pr.id')
@@ -72,7 +72,7 @@ export default class StockRepository extends Repository<Stock> {
         'SUM(quantity) AS total',
         'DATE_FORMAT(created_at,"%d/%m/%Y %H:%i") as created_date',
       ])
-      .where('created_at >= DATE_SUB(NOW(),INTERVAL 31 DAY)')
+      .where('created_at >= DATE_SUB(NOW(),INTERVAL 1 YEAR)')
       .andWhere('type = "entrance"')
       .groupBy('DATE(created_at)')
       .getRawAndEntities();
@@ -82,7 +82,7 @@ export default class StockRepository extends Repository<Stock> {
         'SUM(quantity) AS total',
         'DATE_FORMAT(created_at,"%d/%m/%Y %H:%i") as created_date',
       ])
-      .where('created_at >= DATE_SUB(NOW(),INTERVAL 31 DAY)')
+      .where('created_at >= DATE_SUB(NOW(),INTERVAL 1 YEAR)')
       .andWhere('type = "exit"')
       .groupBy('DATE(created_at)')
       .getRawAndEntities();
