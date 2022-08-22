@@ -7,6 +7,7 @@ export default class ListStockService {
     page,
     per_page,
     filter,
+    id_user,
   }: IFilter): Promise<IPaginate> {
     const stockRepository = getCustomRepository(StockRepository);
 
@@ -14,6 +15,7 @@ export default class ListStockService {
       page,
       per_page,
       filter,
+      id_user,
     });
 
     return stocks;

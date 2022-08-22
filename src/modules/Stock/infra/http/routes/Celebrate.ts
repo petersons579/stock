@@ -29,5 +29,6 @@ export const validateQuery = celebrate({
     page: Joi.number().required(),
     per_page: Joi.number().required(),
     filter: Joi.string().allow('', null),
+    id_user: Joi.string().allow('', null),
   },
 });

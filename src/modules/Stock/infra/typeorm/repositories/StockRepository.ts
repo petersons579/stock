@@ -10,6 +10,7 @@ export default class StockRepository extends Repository<Stock> {
     page,
     per_page,
     filter,
+    id_user,
   }: IFilter): Promise<IPaginate> {
     const query = this.createQueryBuilder('stock')
       .select([
@@ -25,6 +26,7 @@ export default class StockRepository extends Repository<Stock> {
       ])
       .innerJoin(User, 'us', 'stock.id_user = us.id')
       .innerJoin(Product, 'product', 'stock.id_product = product.id')
+      .orderBy('stock.created_at', 'DESC')
       .limit(per_page)
       .offset((page - 1) * per_page);
 
@@ -33,6 +35,12 @@ export default class StockRepository extends Repository<Stock> {
         '(product.description LIKE :filter OR us.name LIKE :filter)',
         { filter: `%${filter}%` },
       );
+
+    if (filter && id_user) {
+      query.andWhere('stock.id_user = :id_user', { id_user });
+    } else if (id_user) {
+      query.where('stock.id_user = :id_user', { id_user });
+    }
 
     const total = await query.getCount();
     const { raw } = await query.getRawAndEntities();

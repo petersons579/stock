@@ -7,6 +7,7 @@ import UpdateStockService from '../../../services/UpdateStockService';
 export default class StockController {
   public async index(request: Request, response: Response): Promise<Response> {
     const filter = request.query.filter as string;
+    const id_user = request.query.id_user as string;
     const page = request.query.page as string;
     const per_page = request.query.per_page as string;
 
@@ -14,6 +15,7 @@ export default class StockController {
 
     const results = await listService.execute({
       filter,
+      id_user,
       page: Number(page),
       per_page: Number(per_page),
     });
