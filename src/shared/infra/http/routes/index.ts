@@ -4,9 +4,10 @@ import UserRouter from '../../../../modules/User/infra/http/routes/user.routes';
 import StockRouter from '../../../../modules/Stock/infra/http/routes/stock.routes';
 import SessionRouter from '../../../../modules/User/infra/http/routes/session.routes';
 import SearchRouter from '../../../../modules/Product/infra/http/routes/search.routes';
-import ProductRouter from '../../../../modules/Product/infra/http/routes/product.routes';
 import PasswordRouter from '../../../../modules/User/infra/http/routes/password.routes';
 import ProfileRouter from '../../../../modules/Profile/infra/http/routes/profile.routes';
+import ProductRouter from '../../../../modules/Product/infra/http/routes/product.routes';
+import UserFilterRouter from '../../../../modules/User/infra/http/routes/filterUser.routes';
 import DashboardRouter from '../../../../modules/Dashboard/infra/http/routes/dashboard.routes';
 import ProfileFilterRouter from '../../../../modules/Profile/infra/http/routes/filterProfile.routes';
 
@@ -33,5 +34,7 @@ routes.use('/search', SearchRouter);
 routes.use('/dashboard', DashboardRouter);
 
 routes.use('/profile_filter', ProfileFilterRouter);
+
+routes.use('/user_filter', UserFilterRouter);
 
 export default routes;

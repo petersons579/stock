@@ -1,6 +1,6 @@
 import { EntityRepository, Repository } from 'typeorm';
 import User from '../entities/User';
-import { IFilter, IPaginate, IUser } from '../../../models';
+import { IFilter, IPaginate, IUser, IFilterResponse } from '../../../models';
 import Profile from '../../../../Profile/infra/typeorm/entities/Profile';
 
 @EntityRepository(User)
@@ -63,5 +63,14 @@ export default class UserRepository extends Repository<User> {
       total,
       data: raw,
     };
+  }
+
+  public async filter(): Promise<IFilterResponse[]> {
+    const { raw } = await this.createQueryBuilder('user')
+      .select(['id', 'name'])
+      .where('active = 1')
+      .getRawAndEntities();
+
+    return raw;
   }
 }

@@ -6,6 +6,7 @@ import { IPassword } from './IPassword';
 import { IUserCreate } from './IUserCreate';
 import { IUserUpdate } from './IUserUpdate';
 import { ISessionRequest } from './ISessionRequest';
+import { IFilterResponse } from './IFIlterResponse';
 
 export {
   ISessionRequest,
@@ -16,4 +17,5 @@ export {
   IUserCreate,
   IUserUpdate,
   IPassword,
+  IFilterResponse,
 };
