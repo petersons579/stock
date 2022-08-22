@@ -1,6 +1,11 @@
 import { EntityRepository, Repository } from 'typeorm';
 import Profile from '../entities/Profile';
-import { IPaginate, IProfile, IFilter } from 'src/modules/Profile/models';
+import {
+  IPaginate,
+  IProfile,
+  IFilter,
+  IFilterResponse,
+} from 'src/modules/Profile/models';
 
 @EntityRepository(Profile)
 export default class Profilerepository extends Repository<Profile> {
@@ -50,5 +55,14 @@ export default class Profilerepository extends Repository<Profile> {
     const profile = await this.findOne({ where: { id } });
 
     return profile;
+  }
+
+  public async filter(): Promise<IFilterResponse[]> {
+    const { raw } = await this.createQueryBuilder('profile')
+      .select(['id', 'description'])
+      .where('active = 1')
+      .getRawAndEntities();
+
+    return raw;
   }
 }

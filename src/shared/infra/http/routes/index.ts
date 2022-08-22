@@ -8,6 +8,7 @@ import ProductRouter from '../../../../modules/Product/infra/http/routes/product
 import PasswordRouter from '../../../../modules/User/infra/http/routes/password.routes';
 import ProfileRouter from '../../../../modules/Profile/infra/http/routes/profile.routes';
 import DashboardRouter from '../../../../modules/Dashboard/infra/http/routes/dashboard.routes';
+import ProfileFilterRouter from '../../../../modules/Profile/infra/http/routes/filterProfile.routes';
 
 import isAuthenticated from '../middlewares/isAuthenticated';
 
@@ -30,5 +31,7 @@ routes.use('/stocks', StockRouter);
 routes.use('/search', SearchRouter);
 
 routes.use('/dashboard', DashboardRouter);
+
+routes.use('/profile_filter', ProfileFilterRouter);
 
 export default routes;
