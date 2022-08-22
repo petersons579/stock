@@ -1,6 +1,6 @@
 import { EntityRepository, Repository } from 'typeorm';
 import Product from '../entities/Product';
-import { IPaginate, IProduct, IFilter } from '../../../models';
+import { IPaginate, IProduct, IFilter, IFilterResponse } from '../../../models';
 
 @EntityRepository(Product)
 export default class ProductRepository extends Repository<Product> {
@@ -71,5 +71,14 @@ export default class ProductRepository extends Repository<Product> {
       .getOne();
 
     return product;
+  }
+
+  public async filter(): Promise<IFilterResponse[]> {
+    const { raw } = await this.createQueryBuilder('product')
+      .select(['id', 'description'])
+      .where('active = 1')
+      .getRawAndEntities();
+
+    return raw;
   }
 }

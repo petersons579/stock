@@ -10,6 +10,7 @@ import ProductRouter from '../../../../modules/Product/infra/http/routes/product
 import UserFilterRouter from '../../../../modules/User/infra/http/routes/filterUser.routes';
 import DashboardRouter from '../../../../modules/Dashboard/infra/http/routes/dashboard.routes';
 import ProfileFilterRouter from '../../../../modules/Profile/infra/http/routes/filterProfile.routes';
+import ProductFilterRouter from '../../../../modules/Product/infra/http/routes/filterProduct.routes';
 
 import isAuthenticated from '../middlewares/isAuthenticated';
 
@@ -36,5 +37,7 @@ routes.use('/dashboard', DashboardRouter);
 routes.use('/profile_filter', ProfileFilterRouter);
 
 routes.use('/user_filter', UserFilterRouter);
+
+routes.use('/product_filter', ProductFilterRouter);
 
 export default routes;
