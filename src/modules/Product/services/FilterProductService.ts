@@ -3,10 +3,10 @@ import { IFilterResponse } from '../models';
 import ProductRepository from '../infra/typeorm/repositories/ProductRepository';
 
 export default class FilterProductService {
-  public async execute(): Promise<IFilterResponse[]> {
+  public async execute(filter?: string): Promise<IFilterResponse[]> {
     const productRepository = getCustomRepository(ProductRepository);
 
-    const products = await productRepository.filter();
+    const products = await productRepository.filter(filter);
 
     return products;
   }

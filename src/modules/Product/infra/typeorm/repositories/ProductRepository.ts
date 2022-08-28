@@ -73,11 +73,18 @@ export default class ProductRepository extends Repository<Product> {
     return product;
   }
 
-  public async filter(): Promise<IFilterResponse[]> {
-    const { raw } = await this.createQueryBuilder('product')
+  public async filter(filter?: string): Promise<IFilterResponse[]> {
+    const query = await this.createQueryBuilder('product')
       .select(['id', 'description'])
-      .where('active = 1')
-      .getRawAndEntities();
+      .where('active = 1');
+
+    if (filter) {
+      query.andWhere('(description LIKE :filter OR barcode LIKE :filter)', {
+        filter: `%${filter}%`,
+      });
+    }
+
+    const { raw } = await query.getRawAndEntities();
 
     return raw;
   }
